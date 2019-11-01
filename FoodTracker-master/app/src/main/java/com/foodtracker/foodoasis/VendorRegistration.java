@@ -1,5 +1,6 @@
 package com.foodtracker.foodoasis;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +18,13 @@ import android.widget.EditText;
 public class VendorRegistration extends Fragment {
     private EditText businessName, Email, Password, PhoNum, Add;
     private Button Register1, Register2;
+
+    OnRegistrationActivityListener registrationActivityListener;
+
+    public interface OnRegistrationActivityListener{
+        public void performBtnLogin();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +52,14 @@ public class VendorRegistration extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void OnAttach(Context context){
+        super.onAttach(context);
+        Activity activity = (Activity) context;
+        registrationActivityListener = (VendorRegistration.OnRegistrationActivityListener) activity;
+
     }
 
 }

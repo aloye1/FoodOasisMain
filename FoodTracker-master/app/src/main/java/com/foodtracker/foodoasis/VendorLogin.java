@@ -20,16 +20,52 @@ public class VendorLogin extends AppCompatActivity {
         //ActionBar actionBar = getActionBar();
         //actionBar.setDisplayHomeAsUpEnabled(true);
 
-        /*if(findViewById(R.id.fragment_container) != null){
+        if(findViewById(R.id.fragment_container) != null){
             if(savedInstanceState != null){
                 return;
             }
             if(prefConfig.readLoginStatus()){
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new VendorLoginPage()).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new VendorWelcome()).commit();
             } else {
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container. new ()).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new VendorLoginPage()).commit();
             }
         }
-*/
+
+    }
+
+    @Override
+    public void performRegister(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VendorRegistration()).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void performBtnLogin(){
+        prefConfig.writeLoginStatus(false);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VendorLoginPage()).commit();
+    }
+
+    @Override
+    public void performBtnRegister(){
+        prefConfig.writeLoginStatus(false);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VendorRegistration()).commit();
+    }
+
+    @Override
+    public void performLogin(String name){
+        prefConfig.writeName(name);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VendorWelcome()).commit();
+
+    }
+
+    @Override
+    public void logoutPreformed(){
+        prefConfig.writeLoginStatus(false);
+
+        prefConfig.writeName("Vendor");
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VendorLoginPage()).commit();
     }
 }
